@@ -1,0 +1,15 @@
+#board-container {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    width: 225px;
+    height: 225px;
+    cursor: pointer;
+    margin: auto;
+}
+
+.cell {
+    width: 75px;
+    height: 75px;
+    border: 1px solid black;
+    
+}
