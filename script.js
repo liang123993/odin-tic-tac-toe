@@ -7,10 +7,8 @@ const Gameboard = (function() {
     let currentPlayer = 'X'
     let gameBoard = ["","","","","","","","",""]
 
-    const winningMessage = `${currentPlayer} has won!`
     const tieMessage = "it's a tie!"
-    const currentPlayerTurn = `It's ${currentPlayer}'s turn`
-    statusMsg.innerHTML = currentPlayerTurn
+    statusMsg.innerHTML = `It's ${currentPlayer}'s turn`
 
     const winConditions = [
         [0, 1, 2],
@@ -27,7 +25,7 @@ const Gameboard = (function() {
     function restartGame() {
         gameBoard = ["","","","","","","","",""]
         currentPlayer = 'X'
-        statusMsg.innerHTML = currentPlayerTurn
+        statusMsg.innerHTML = `It's ${currentPlayer}'s turn`
         cells.forEach(cell => cell.textContent = "")
         gameActive = true
     }
@@ -46,7 +44,7 @@ const Gameboard = (function() {
     }
 
     function checkWinner() {
-        roundWin = false
+        let roundWin = false
         for (let i = 0; i < winConditions.length; i++) {
             const condition = winConditions[i]
             const cellA = gameBoard[condition[0]]
@@ -58,19 +56,31 @@ const Gameboard = (function() {
             }
             // win
             if (cellA === cellB && cellB === cellC) {
-                roundwin = true
+                roundWin = true
                 break
             }
         }
 
-        if (roundwin) {
-            statusMsg.textContent = winningMessage
+        if (roundWin) {
+            statusMsg.textContent = `${currentPlayer} has won!`
+            gameActive = false
+        } else if (!gameBoard.includes("")) {
+            // tie
+            statusMsg.textContent = tieMessage
+            gameActive = false
+        } else {
+            changePlayer()
         }
     }
 
     function updateCell(cell, cellIndex) {
         gameBoard[cellIndex] = currentPlayer
         cell.innerHTML = currentPlayer
+    }
+
+    function changePlayer() {
+        currentPlayer = (currentPlayer == "X") ? "O" : "X"
+        statusMsg.textContent = `It's ${currentPlayer}'s turn`
     }
 
     cells.forEach(cell => cell.addEventListener('click', cellClick))
