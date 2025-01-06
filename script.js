@@ -29,6 +29,7 @@ const Gameboard = (function() {
         currentPlayer = 'X'
         statusMsg.innerHTML = currentPlayerTurn
         cells.forEach(cell => cell.textContent = "")
+        gameActive = true
     }
 
     // cell clicked
@@ -40,7 +41,31 @@ const Gameboard = (function() {
             return
         } else {
             updateCell(this, cellIndex)
+            checkWinner()
         }        
+    }
+
+    function checkWinner() {
+        roundWin = false
+        for (let i = 0; i < winConditions.length; i++) {
+            const condition = winConditions[i]
+            const cellA = gameBoard[condition[0]]
+            const cellB = gameBoard[condition[1]]
+            const cellC = gameBoard[condition[2]]
+            // no winner yet
+            if (cellA == "" || cellB == "" || cellC == "") {
+                continue
+            }
+            // win
+            if (cellA === cellB && cellB === cellC) {
+                roundwin = true
+                break
+            }
+        }
+
+        if (roundwin) {
+            statusMsg.textContent = winningMessage
+        }
     }
 
     function updateCell(cell, cellIndex) {
