@@ -2,6 +2,10 @@ body{
     text-align: center;
 }
 
+header {
+    padding: 10px;
+}
+
 #board-container {
     display: grid;
     grid-template-columns: repeat(3, auto);
@@ -18,4 +22,9 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+#status-message {
+    padding: 10px;
+
 }
